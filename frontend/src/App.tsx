@@ -1,14 +1,21 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
+import { AuthProvider } from './contexts/AuthContext'
+import LoginPage from './components/auth/LoginPage'
+import SignupPage from './components/auth/SignupPage'
 
 function App() {
     return (
-        <BrowserRouter>
-            <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950">
-                <Routes>
-                    <Route path="/" element={<LandingPage />} />
-                </Routes>
-            </div>
-        </BrowserRouter>
+        <AuthProvider>
+            <BrowserRouter>
+                <div className="min-h-screen bg-gradient-to-br from-gray-950 via-gray-900 to-gray-950">
+                    <Routes>
+                        <Route path="/" element={<LandingPage />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/signup" element={<SignupPage />} />
+                    </Routes>
+                </div>
+            </BrowserRouter>
+        </AuthProvider>
     )
 }
 
@@ -23,12 +30,18 @@ function LandingPage() {
                     Intelligent movie discovery powered by AI
                 </p>
                 <div className="flex gap-4 justify-center mt-8">
-                    <button className="px-8 py-3 gradient-primary rounded-full text-white font-semibold hover:opacity-90 transition-opacity">
+                    <Link
+                        to="/signup"
+                        className="px-8 py-3 gradient-primary rounded-full text-white font-semibold hover:opacity-90 transition-opacity"
+                    >
                         Get Started
-                    </button>
-                    <button className="px-8 py-3 glass-effect rounded-full text-white font-semibold hover:bg-white/20 transition-colors">
-                        Learn More
-                    </button>
+                    </Link>
+                    <Link
+                        to="/login"
+                        className="px-8 py-3 glass-effect rounded-full text-white font-semibold hover:bg-white/20 transition-colors"
+                    >
+                        Sign In
+                    </Link>
                 </div>
             </div>
         </div>
