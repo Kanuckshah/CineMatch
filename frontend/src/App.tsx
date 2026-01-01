@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Link } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
 import LoginPage from './components/auth/LoginPage'
 import SignupPage from './components/auth/SignupPage'
+import OnboardingPage from './pages/OnboardingPage'
 
 function App() {
     return (
@@ -12,6 +13,7 @@ function App() {
                         <Route path="/" element={<LandingPage />} />
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/signup" element={<SignupPage />} />
+                        <Route path="/onboarding" element={<OnboardingPage />} />
                     </Routes>
                 </div>
             </BrowserRouter>
