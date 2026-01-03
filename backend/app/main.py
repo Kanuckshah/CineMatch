@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import movies, users
+from app.routers import movies, users, recommendations
 import uvicorn
 
 app = FastAPI(
@@ -21,6 +21,7 @@ app.add_middleware(
 # Include routers
 app.include_router(movies.router)
 app.include_router(users.router)
+app.include_router(recommendations.router)
 
 @app.get("/")
 def read_root():
