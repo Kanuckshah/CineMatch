@@ -3,6 +3,7 @@ import { AuthProvider } from './contexts/AuthContext'
 import LoginPage from './components/auth/LoginPage'
 import SignupPage from './components/auth/SignupPage'
 import OnboardingPage from './pages/OnboardingPage'
+import DiscoverPage from './pages/DiscoverPage'
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                         <Route path="/login" element={<LoginPage />} />
                         <Route path="/signup" element={<SignupPage />} />
                         <Route path="/onboarding" element={<OnboardingPage />} />
+                        <Route path="/discover" element={<DiscoverPage />} />
                     </Routes>
                 </div>
             </BrowserRouter>
