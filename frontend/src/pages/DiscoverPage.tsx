@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import SwipeCard from '../components/swipe/SwipeCard';
 import { useAuth } from '../contexts/AuthContext';
+import { Link } from 'react-router-dom';
 import api from '../services/api';
 
 export default function DiscoverPage() {
@@ -70,9 +71,12 @@ export default function DiscoverPage() {
                     <h1 className="text-3xl font-bold gradient-primary bg-clip-text text-transparent">
                         CineMatch
                     </h1>
-                    <div className="text-gray-400">
-                        {currentIndex + 1} / {movies.length}
-                    </div>
+                    <Link
+                        to="/for-you"
+                        className="text-sm text-primary-400 hover:text-primary-300 font-semibold"
+                    >
+                        Browse All
+                    </Link>
                 </div>
 
                 <div className="relative h-[600px] mb-8">

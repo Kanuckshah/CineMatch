@@ -4,6 +4,7 @@ import LoginPage from './components/auth/LoginPage'
 import SignupPage from './components/auth/SignupPage'
 import OnboardingPage from './pages/OnboardingPage'
 import DiscoverPage from './pages/DiscoverPage'
+import ForYouPage from './pages/ForYouPage'
 
 function App() {
     return (
@@ -16,6 +17,7 @@ function App() {
                         <Route path="/signup" element={<SignupPage />} />
                         <Route path="/onboarding" element={<OnboardingPage />} />
                         <Route path="/discover" element={<DiscoverPage />} />
+                        <Route path="/for-you" element={<ForYouPage />} />
                     </Routes>
                 </div>
             </BrowserRouter>
