@@ -1,6 +1,11 @@
 from fastapi import APIRouter, HTTPException, Query
 from app.services.recommendation_engine import calculate_final_score
 from app.services.tmdb_client import tmdb_client
+from app.services.ml_recommender import (
+    add_exploration_diversity,
+    apply_collaborative_signal,
+    diversity_filter
+)
 from typing import List
 import firebase_admin
 from firebase_admin import firestore
@@ -40,11 +45,17 @@ async def get_recommendations(
         try:
             # Get full details for scoring
             movie_details = tmdb_client.get_movie_details(movie["id"])
-            score = calculate_final_score(user_profile, movie_details, favorite_movie_ids)
+            base_score = calculate_final_score(user_profile, movie_details, favorite_movie_ids)
+            
+            # Apply collaborative signal
+            final_score = apply_collaborative_signal(
+                base_score,
+                movie.get("popularity", 0)
+            )
             
             scored_movies.append({
                 "movie": movie,
-                "score": score,
+                "score": final_score,
                 "details": {
                     "genres": [g["name"] for g in movie_details.get("genres", [])],
                     "actors": [a["name"] for a in movie_details.get("credits", {}).get("cast", [])[:3]],
@@ -54,9 +65,17 @@ async def get_recommendations(
             print(f"Error scoring movie {movie['id']}: {e}")
             continue
     
-    # Sort by score and limit
+    # Sort by score
     scored_movies.sort(key=lambda x: x["score"], reverse=True)
-    top_recommendations = scored_movies[:limit]
+    
+    # Apply diversity filter
+    diverse_recs = diversity_filter(scored_movies)
+    
+    # Apply exploration/exploitation
+    final_recs = add_exploration_diversity(diverse_recs)
+    
+    # Limit results
+    top_recommendations = final_recs[:limit]
     
     return {
         "recommendations": top_recommendations,
